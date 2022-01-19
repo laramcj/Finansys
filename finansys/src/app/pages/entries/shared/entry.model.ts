@@ -3,8 +3,8 @@ import { Category } from '../../categories/shared/category.model';
 
 export class Entry extends BaseResourceModel {
   constructor(
-    public user_id?: string,
-    public id?: string,
+    public override user_id?: string,
+    public override id?: string,
     public name?: string,
     public description?: string,
     public type?: string,
@@ -21,6 +21,10 @@ export class Entry extends BaseResourceModel {
     expense: 'Despesa',
     revenue: 'Receita',
   };
+
+  static fromJson(jsonData:any): Entry {
+    return Object.assign(new Entry(),jsonData);
+  }
 
   get paidText(): string {
     return this.paid ? 'Pago' : 'Pendente';

@@ -9,14 +9,20 @@ import { map, catchError } from 'rxjs/operators';
 export abstract class BaseResourceService<T extends BaseResourceModel> {
   protected http: HttpClient;
 
-  constructor(protected apiPath: string, protected injector: Injector) {
+  constructor(
+    protected apiPath: string,
+    protected injector: Injector,
+    protected jsonDataToResourceFn: (jsonData: any) => T
+  ) {
     this.http = injector.get(HttpClient);
   }
 
   getAll(): Observable<T[]> {
-    return this.http
-      .get(this.apiPath + '?user_id=lara_correa')
-      .pipe(catchError(this.handleError), map(this.jsonDataToResources));
+    return this.http.get(this.apiPath + '?user_id=lara_correa').pipe(
+      //map((jsonData: Array<any>) => this.jsonDataToResources(jsonData)),
+      map(this.jsonDataToResources.bind(this)),
+      catchError(this.handleError)
+    );
   }
 
   getById(id: number): Observable<T> {
@@ -24,7 +30,10 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
 
     return this.http
       .get(url)
-      .pipe(catchError(this.handleError), map(this.jsonDataToResource));
+      .pipe(
+        map(this.jsonDataToResource.bind(this)),
+        catchError(this.handleError)
+      );
   }
 
   create(resource: T): Observable<T> {
@@ -33,15 +42,18 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
 
     return this.http
       .post(this.apiPath + '?user_id=lara_correa', resource)
-      .pipe(catchError(this.handleError), map(this.jsonDataToResource));
+      .pipe(
+        map(this.jsonDataToResource.bind(this)),
+        catchError(this.handleError)
+      );
   }
 
   update(resource: T): Observable<T> {
     const url = `${this.apiPath}`;
 
     return this.http.put(url, resource).pipe(
-      catchError(this.handleError),
-      map(() => resource)
+      map(() => resource),
+      catchError(this.handleError)
     );
   }
 
@@ -49,8 +61,8 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     const url = `${this.apiPath}` + '?user_id=lara_correa&id=' + `${id}`;
 
     return this.http.delete(url).pipe(
-      catchError(this.handleError),
-      map(() => null)
+      map(() => null),
+      catchError(this.handleError)
     );
   }
 
@@ -58,12 +70,14 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
 
   protected jsonDataToResources(jsonData: any[]): T[] {
     const resources: T[] = [];
-    jsonData.forEach((element: any) => resources.push(element as T));
+    jsonData.forEach((element: any) =>
+      resources.push(this.jsonDataToResourceFn(element))
+    );
     return resources;
   }
 
   protected jsonDataToResource(jsonData: any): T {
-    return jsonData as T;
+    return this.jsonDataToResourceFn(jsonData);
   }
 
   protected handleError(error: any): Observable<any> {

@@ -10,6 +10,6 @@ import { BaseResourceService } from 'src/app/shared/services/base-resource.servi
 })
 export class CategoryService extends BaseResourceService<Category> {
   constructor(injector: Injector) {
-    super(environment.baseUrl + '/categorias', injector);
+    super(environment.baseUrl + '/categorias', injector, Category.fromJson);
   }
 }
