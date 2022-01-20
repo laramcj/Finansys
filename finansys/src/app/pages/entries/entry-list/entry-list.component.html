@@ -28,7 +28,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let entry of entries">
+    <tr *ngFor="let entry of resources">
       <td>
         <strong>{{ entry.name }}</strong> <br />
         <small class="text-success">{{ entry.date }}</small> <br />
@@ -38,11 +38,14 @@
         {{ entry.category?.name }}
       </td>
       <td class="text-right">
-        <strong [class.text-success]="entry.type == 'revenue'" [class.text-danger]="entry.type == 'expense'">
+        <strong
+          [class.text-success]="entry.type == 'revenue'"
+          [class.text-danger]="entry.type == 'expense'"
+        >
           {{ entry.amount }}
         </strong>
-        <br>
-        <small>{{entry.paidText}}</small>
+        <br />
+        <small>{{ entry.paidText }}</small>
       </td>
       <td class="text-center">
         <a
@@ -51,7 +54,7 @@
           >Editar</a
         >
         <button
-          (click)="deleteEntry(entry)"
+          (click)="deleteResource(entry)"
           class="btn btn-outline-danger btn-sm ml-2"
         >
           Excluir
