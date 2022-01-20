@@ -26,7 +26,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let category of categories">
+    <tr *ngFor="let category of resources">
       <td>
         <strong>{{ category.name }}</strong> <br />
         <small>{{ category.description }}</small>
@@ -38,7 +38,7 @@
           >Editar</a
         >
         <button
-          (click)="deleteCategory(category)"
+          (click)="deleteResource(category)"
           class="btn btn-outline-danger btn-sm ml-2"
         >
           Excluir
