@@ -174,7 +174,9 @@
             formControlName="categoryId"
             class="form-control"
           >
-            <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{ category.name }}
+            </option>
           </select>
 
           <div
