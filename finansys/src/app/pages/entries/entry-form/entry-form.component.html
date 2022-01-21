@@ -1,22 +1,13 @@
-<nav class="mb-5">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a routerLink="/">Home</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a routerLink="/entries">Lançamentos</a>
-    </li>
-    <li class="breadcrumb-item active">{{ pageTitle }}</li>
-  </ol>
-</nav>
+<app-bread-crumb
+  [items]="[{ text: 'Lançamentos', link: '/entries' }, { text: pageTitle }]"
+></app-bread-crumb>
 
 <div class="row mb-4">
   <div class="col-md-10">
     <h1 class="h2 border-left pl-2">{{ pageTitle }}</h1>
   </div>
   <div class="col-md-2">
-    <a routerLink="/entries" class="btn btn-light float-right">
-      << Voltar </a>
+    <a routerLink="/entries" class="btn btn-light float-right"> << Voltar </a>
   </div>
 </div>
 
@@ -29,19 +20,27 @@
         <!-- type -->
         <div class="form-group col-md-2">
           <label for="type">Tipo</label>
-          <select name="type" id="type" formControlName="type" class="form-control">
+          <select
+            name="type"
+            id="type"
+            formControlName="type"
+            class="form-control"
+          >
             <option *ngFor="let option of typeOptions" [value]="option.value">
               {{ option.text }}
             </option>
             <!--
             <option value="expense">Despesa</option>
             <option value="revenue">Receita</option>
-          -->
-          </select>
+          --></select>
 
-          <div class="text-danger" *ngIf="
-            resourceForm.get('type')?.invalid && resourceForm.get('type')?.touched
-            ">
+          <div
+            class="text-danger"
+            *ngIf="
+              resourceForm.get('type')?.invalid &&
+              resourceForm.get('type')?.touched
+            "
+          >
             <div *ngIf="resourceForm.get('type')?.errors?.['required']">
               dado obrigatório
             </div>
@@ -51,11 +50,20 @@
         <!-- name -->
         <div class="form-group col-md-5">
           <label for="name">Lançamento</label>
-          <input type="text" class="form-control" id="name" formControlName="name" />
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            formControlName="name"
+          />
 
-          <div class="text-danger" *ngIf="
-            resourceForm.get('name')?.invalid && resourceForm.get('name')?.touched
-            ">
+          <div
+            class="text-danger"
+            *ngIf="
+              resourceForm.get('name')?.invalid &&
+              resourceForm.get('name')?.touched
+            "
+          >
             <div *ngIf="resourceForm.get('name')?.errors?.['required']">
               dado obrigatório
             </div>
@@ -72,13 +80,21 @@
             <div class="input-group-prepend">
               <div class="input-group-text">R$</div>
             </div>
-            <input [imask]="imaskConfig" type="text" class="form-control text-right" id="amount"
-              formControlName="amount" />
+            <input
+              [imask]="imaskConfig"
+              type="text"
+              class="form-control text-right"
+              id="amount"
+              formControlName="amount"
+            />
           </div>
-          <div class="text-danger" *ngIf="
-            resourceForm.get('amount')?.invalid &&
-            resourceForm.get('amount')?.touched
-            ">
+          <div
+            class="text-danger"
+            *ngIf="
+              resourceForm.get('amount')?.invalid &&
+              resourceForm.get('amount')?.touched
+            "
+          >
             <div *ngIf="resourceForm.get('amount')?.errors?.['required']">
               dado obrigatório
             </div>
@@ -88,13 +104,24 @@
         <!-- date -->
         <div class="form-group col-md-2">
           <label for="date">Data</label>
-          <p-calendar id="date" formControlName="date" inputStyleClass="form-control" dataType="string"
-            dateFormat="dd/mm/yy" [locale]="ptBR" [showButtonBar]="true">
+          <p-calendar
+            id="date"
+            formControlName="date"
+            inputStyleClass="form-control"
+            dataType="string"
+            dateFormat="dd/mm/yy"
+            [locale]="ptBR"
+            [showButtonBar]="true"
+          >
           </p-calendar>
 
-          <div class="text-danger" *ngIf="
-            resourceForm.get('date')?.invalid && resourceForm.get('date')?.touched
-            ">
+          <div
+            class="text-danger"
+            *ngIf="
+              resourceForm.get('date')?.invalid &&
+              resourceForm.get('date')?.touched
+            "
+          >
             <div *ngIf="resourceForm.get('date')?.errors?.['required']">
               dado obrigatório
             </div>
@@ -107,15 +134,27 @@
         <div class="form-group col-md-2">
           <label for="paid">Pago</label>
           <div class="btn-group">
-            <label (click)="resourceForm.get('paid')?.setValue(true)"
-              [class.active]="resourceForm.get('paid')?.value == true" class="btn btn-outline-info">Pago</label>
-            <label (click)="resourceForm.get('paid')?.setValue(false)"
-              [class.active]="resourceForm.get('paid')?.value == false" class="btn btn-outline-info">Pendente</label>
+            <label
+              (click)="resourceForm.get('paid')?.setValue(true)"
+              [class.active]="resourceForm.get('paid')?.value == true"
+              class="btn btn-outline-info"
+              >Pago</label
+            >
+            <label
+              (click)="resourceForm.get('paid')?.setValue(false)"
+              [class.active]="resourceForm.get('paid')?.value == false"
+              class="btn btn-outline-info"
+              >Pendente</label
+            >
           </div>
 
-          <div class="text-danger" *ngIf="
-            resourceForm.get('paid')?.invalid && resourceForm.get('paid')?.touched
-            ">
+          <div
+            class="text-danger"
+            *ngIf="
+              resourceForm.get('paid')?.invalid &&
+              resourceForm.get('paid')?.touched
+            "
+          >
             <div *ngIf="resourceForm.get('paid')?.errors?.['required']">
               dado obrigatório
             </div>
@@ -125,16 +164,24 @@
         <!-- categoryId -->
         <div class="form-group col-md-3">
           <label for="categoryId">Tipo</label>
-          <select name="categoryId" id="categoryId" formControlName="categoryId" class="form-control">
+          <select
+            name="categoryId"
+            id="categoryId"
+            formControlName="categoryId"
+            class="form-control"
+          >
             <option *ngFor="let category of categories" [value]="category.id">
               {{ category.name }}
             </option>
           </select>
 
-          <div class="text-danger" *ngIf="
-            resourceForm.get('categoryId')?.invalid &&
-            resourceForm.get('categoryId')?.touched
-            ">
+          <div
+            class="text-danger"
+            *ngIf="
+              resourceForm.get('categoryId')?.invalid &&
+              resourceForm.get('categoryId')?.touched
+            "
+          >
             <div *ngIf="resourceForm.get('categoryId')?.errors?.['required']">
               dado obrigatório
             </div>
@@ -145,7 +192,12 @@
 
         <div class="form-group col-md-7">
           <label for="description">Descrição</label>
-          <input type="text" class="form-control" id="description" formControlName="description" />
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            formControlName="description"
+          />
         </div>
       </div>
     </div>
@@ -158,8 +210,11 @@
     </ul>
   </div>
 
-  <button [disabled]="submittingForm || resourceForm.invalid" type="submit"
-    class="btn btn-primary btn-lg mt-3 float-right">
+  <button
+    [disabled]="submittingForm || resourceForm.invalid"
+    type="submit"
+    class="btn btn-primary btn-lg mt-3 float-right"
+  >
     Salvar
   </button>
 </form>
